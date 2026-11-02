@@ -146,6 +146,19 @@ skyrc-flasher check
   skyrc-flasher check --core 100198
   ```
 
+#### Standalone Info Fetcher (`fetch_info`)
+A dedicated lightweight binary is also included to query binary info from a Core ID, a direct download URL, or a local `.bin` file:
+```bash
+# Query by Core ID
+fetch_info 100198
+
+# Query by direct download URL (HTTP HEAD)
+fetch_info "http://upgrade.skyrc.com/download/3901-0200-23_V217_UPDATEROM.bin.0025400f9805eca2dbd865765613d4f9"
+
+# Inspect local .bin file size, modified date, and 32-bit checksum
+fetch_info b6neo_v2.17.bin
+```
+
 ---
 
 ### 4. Download Firmware to Disk
