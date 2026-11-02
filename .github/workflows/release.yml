@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+    - name: Build release binary
+      run: cargo build --release
+    - name: Package binary
+      run: |
+        mkdir -p dist
+        cp target/release/skyrc-flasher dist/
+        cp README.md LICENSE dist/
+        tar -czvf skyrc-flasher-x86_64-linux.tar.gz -C dist skyrc-flasher README.md LICENSE
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: skyrc-flasher-x86_64-linux.tar.gz
+        generate_release_notes: true
